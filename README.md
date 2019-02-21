@@ -4,10 +4,9 @@ Pré-requisito(s):<br>
 - Node.js
 <br><br>
 Clone o projeto <a href="https://github.com/kielvi/star-wars.git" target="_blank">star-wars</a>:<br>
-- git@github.com:kielvi/star-wars.git
 <br><br>
 Após clonar o projeto, inicialize seu servidor:
-- ng run start
+- npm run start
 <br><br>
 Pronto! Você já pode testar o projeto utilizando o endereço local abaixo:
 - http://localhost:3000/
