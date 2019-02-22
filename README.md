@@ -14,3 +14,6 @@ Pronto! Você já pode testar o projeto utilizando o endereço local abaixo:
 
 Info(s) de desenvolvimento:<br>
 - Utilizei o boilerplate <a href="https://github.com/facebook/create-react-app" target="_blank">create-react-app</a> como base.
+<br>
+- Utilizei a biblioteca Axios ao invés de Fetch por causa de alguns navegadores não oferecerem suporte a essa api de JavaScript;
+Para instalá-la, em seu prompt de comando utilize: npm install –save axios
