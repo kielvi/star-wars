@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-export const DEFAULT_QUERY	= '';
+
 export const PATH_BASE		= 'https://swapi.co/api';
 export const PATH_SEARCH	= '/films';
-export const PARAM_SEARCH	= 'format=json';
+export const PATH_ID		= '';
+export const PATH_FORMAT	= 'format=json';
 
-export const url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}`;
+export const url = `${PATH_BASE}${PATH_SEARCH}${PATH_ID}?${PATH_FORMAT}`;
 
 
 export const largeColunm	= { width: '40%' }

@@ -3,13 +3,13 @@ import axios from 'axios';
 import './index.css';
 
 import {
-	DEFAULT_QUERY,
 	DEFAULT_HPP,
 	PATH_BASE,
 	PATH_SEARCH,
-	PARAM_SEARCH,
+	PATH_FORMAT,
 	PARAM_PAGE,
-	PARAM_HPP
+	PARAM_HPP, 
+	PATH_ID
 } from '../../constants';
 import Table from '../Table';
 
@@ -24,27 +24,45 @@ class App extends Component {
 		super(props);
 
 		this.state = {
-			condition: false,
+			is_single: false,
 			allResults: null,
-			searchFilms: '',
-			searchTerm: DEFAULT_QUERY,
+			searchKey: '',
+			searchTerm: PATH_ID,
 			error: null, 
 		}
 
-		this.handleClick = this.handleClick.bind(this)
+		//this.handleClick = this.handleClick.bind(this)
+		this.accessFilm				= this.accessFilm.bind(this);
 		this.setSearchTopStories	= this.setSearchTopStories.bind(this);
 		this.fetchSearchTopStories	= this.fetchSearchTopStories.bind(this);
 	}
 
-  handleClick() {
+  /*handleClick() {
     this.setState({
       condition: !this.state.condition
     })
-  }
+    console.log(this)
+  }*/
+
+	accessFilm(id) {
+		const { searchKey, allResults } = this.state;
+		const { results, page } = allResults[searchKey];
+
+		const isNotId = item => item.episode_id == id;
+		const updateFilm = results.filter(isNotId);
+		
+		this.setState({
+			is_single: !this.state.is_single,
+			allResults: {
+				[searchKey]: { results: updateFilm, page }
+			}
+		});
+		console.log(this.state)
+	}
 
 	setSearchTopStories(result) {
 		const { results, page } = result;
-		const { searchFilms, allResults } = this.state;
+		const { searchKey, allResults } = this.state;
 
 
 		const updatedResults = [
@@ -53,13 +71,14 @@ class App extends Component {
 
 		this.setState({
 			allResults: {
-				[searchFilms]: { results: updatedResults, page }
+				[searchKey]: { results: updatedResults, page }
 			}
 		});
+		console.log(this.state)
 	}
 
 	fetchSearchTopStories(searchTerm, page = 0) {
-			axios(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}`)
+			axios(`${PATH_BASE}${PATH_SEARCH}?${PATH_FORMAT}`)
 			.then(result => this._isMounted && this.setSearchTopStories(result.data))
 			.catch(error => this._isMounted && this.setState({ error }));
 	}
@@ -69,18 +88,13 @@ class App extends Component {
 
 		const { searchTerm } = this.state;
 
-		this.setState({ searchFilms: searchTerm });
+		this.setState({ searchKey: searchTerm });
 		this.fetchSearchTopStories(searchTerm);
 	}
 
 	componentWillUnmount() {
 		this._isMounted = false;
 	}
-
-	onSearchChange = (event) => {
-		this.setState({ searchTerm: event.target.value })
-	}
-
 
 
 
@@ -90,40 +104,38 @@ class App extends Component {
 		const {
 			searchTerm, 
 			allResults,
-			searchFilms,
-			error,
-			condition
+			searchKey,
+			error
+			//condition
 		} = this.state;
 		
 		const page = (
 			allResults && 
-			allResults[searchFilms] &&
-			allResults[searchFilms].page
+			allResults[searchKey] &&
+			allResults[searchKey].page
 		) || 0;
 
 		const list = (
 			allResults && 
-			allResults[searchFilms] &&
-			allResults[searchFilms].results
+			allResults[searchKey] &&
+			allResults[searchKey].results
 		) || [];
-
 
 
 		return (
 			<div className="App">
 				<header>
-					<div class="starwars-demo">
+					<div className="starwars-demo">
 						<img src={'//cssanimation.rocks/demo/starwars/images/star.svg'} alt="Star" className="star"/>
 						<img src={'//cssanimation.rocks/demo/starwars/images/wars.svg'} alt="Wars" className="wars"/>
-						<h2 class="byline" id="byline">Challenge Ilegra</h2>
+						<h2 className="byline" id="byline">Challenge Ilegra</h2>
 					</div>
 				</header>
 				<main>
 
 						<Table 
 							list={list}
-							handleClick={this.handleClick}
-							condition={condition}
+							accessFilm={this.accessFilm}
 						/>
 				</main>
 				<footer>

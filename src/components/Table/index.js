@@ -10,7 +10,7 @@ import {
 	smallColumn
 } from '../../constants';
 
-class TitleFilm extends Component {
+/*class TitleFilm extends Component {
   render() {
     return (
 
@@ -28,9 +28,39 @@ class TitleFilm extends Component {
 
     )    
   }
+}*/
+// className={ condition ? "table-item toggled" : "table-item" }
+const Table = ({ list, is_single, accessFilm }) => {
+	
+	return (
+		<div className="table">
+			{list.map(item =>
+				<div key={item.episode_id} className="table-item">
+					<div className="table-item-title">
+						<a 
+							href={'javascript:void(0)'}
+							onClick={() => accessFilm(item.episode_id)}
+						>
+        					{item.title}
+        				</a>
+      				</div>
+
+
+
+
+					<div className="table-item-data">
+						ss
+					</div>
+						
+
+					
+				</div>
+			)}
+		</div>
+	);
 }
 
-const Table = ({ list, condition, handleClick }) => {
+/*const Table = ({ list, condition, handleClick }) => {
 	
 	return (
 		<div className="table">
@@ -56,7 +86,7 @@ const Table = ({ list, condition, handleClick }) => {
 			)}
 		</div>
 	);
-}
+}*/
 
 
 
