@@ -1,0 +1,83 @@
+
+.movie {
+	font-size: 0;
+	max-width: 90%;
+	margin: 40px auto;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: stretch;
+}
+.movie-item {
+	width: 100%;
+	display: flex;
+	line-height: 24px;
+	white-space: nowrap;
+	margin: 10px;
+	padding: 0;
+	background: #393e48;
+
+	/*margin: 10px;
+	padding: 30px 10px;
+	background: #393e48;
+	border: 1px solid #464c58;
+	flex-grow: 1;
+	flex-shrink: 1;
+	align-content: stretch;
+	min-width: 20%;*/
+}
+.movie-item-data {
+	height: 200px;
+}
+
+.movie-item-title {
+	width: 100%;
+	font-size: 22px;
+	font-weight: bold;
+	position: relative;
+}
+.movie-item-title a {
+	padding: 30px;
+	display: block;
+}
+.movie-item-title span {
+	position: absolute;
+	right: 20px;
+	background: #30343c;
+	padding: 10px 15px;
+	top: 20px;
+	font-size: 40px;
+}
+
+
+
+.movie-header {
+	display: flex;
+	line-height: 24px;
+	font-size: 16px;
+	padding: 0 10px;
+	justify-content: space-between;
+}
+.movie-empty {
+	margin: 200px;
+	text-align: center;
+	font-size: 16px;
+}
+.movie-row {
+	display: flex;
+	line-height: 24px;
+	white-space: nowrap;
+	margin: 10px 0;
+	padding: 10px;
+	background: #ffffff;
+	border: 1px solid #e3e3e3;
+}
+.movie-header > span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 5px;
+}
+.movie-row > span {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0 5px;
+}
