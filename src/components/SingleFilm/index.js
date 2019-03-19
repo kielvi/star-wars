@@ -7,6 +7,7 @@ import {
 	Link,
 	Redirect,
 	Switch,
+	withRouter,
 	BrowserRouter as Router,
 } from 'react-router-dom';
 import './index.css';
@@ -20,33 +21,78 @@ import {
 	PATH_ID
 } from '../../constants';
 import Header from '../Header';
+import Loading from "../Loading";
 
 
-/*
-const SingleFilm = ({ current_film, backFilms }) => {
-	console.log('')
-	return (
-		<div className="movie">
-			dd
-		</div>
-	);
-}*/
 
 class SingleFilm extends Component {
-	_isMounted = false;
-
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			films		: this.props.location.state.films,
+			episode	: props.match.params.episode,
+			loading: false
 		}
+		this.hideLoading();
+	}
+
+	showLoading = () => this.setState({ loading: true });
+	hideLoading = () => this.setState({ loading: false });
+
+	redirectToHome = () => {
+		const { history } = this.props;
+		if(history) history.push('/');
+	}
+
+	componentDidMount() {
+		const films = this.props.location.state.films;
+		const episode = this.props.match.params.episode;
+		const isId = item => item.episode == episode;
+
+		const UpdatedCurrentFilm = films.filter(isId);
+		
+
+		this.setState({
+			current_film: UpdatedCurrentFilm
+		});
+		this.showLoading();
 	}
 
 	render() {
-		console.log(this)
+		const { history } = this.props;
+		const {
+			current_film,
+			loading
+		} = this.state;
+
 		return (
-			<div className="App">
-				ss
+			<div>
+				{
+					loading ? (
+						
+						<div className="movie">
+							<div className="movie-item">
+								<div className="movie-item-title">
+				    				
+				  				</div>
+
+								<div className="mobie-item-data">
+									
+								</div>
+
+								<div>
+									<button onClick={this.redirectToHome}>back</button>
+								</div>
+
+								
+							</div>
+						</div>
+						
+					) : (
+						<Loading />
+					)
+				}
 			</div>
 		)
 	}
@@ -102,16 +148,13 @@ class SingleFilm extends Component {
 		const { results, page } = result;
 		const id = this.props.match.params.id;
 
-		const isId = item => item.episode_id == id;
+		const isId = item => item.episode == id;
 
 		const updateFilm = results.filter(isId);
 
 		this.setState({ 
 			current_film: updateFilm 
 		});
-		
-
-
 	}
 	axiosAllFilms() {
 		axios(`${PATH_BASE}${PATH_SEARCH}?${PATH_FORMAT}`)
@@ -128,7 +171,6 @@ class SingleFilm extends Component {
 
 	componentWillUnmount() {
 		this._isMounted = false;
-		
 	}
 
 
@@ -183,4 +225,4 @@ class SingleFilm extends Component {
 */
 
 
-export default SingleFilm;
+export default withRouter(SingleFilm);
